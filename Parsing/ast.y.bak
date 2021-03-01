@@ -70,7 +70,7 @@ POSTFIX_EXP
 
 LOOPS
       : WHILE '(' COND ')' LOOPBODY {$$=buildTree("WHILE",$3,$5);}
-      | FOR '(' ASSIGN_EXPR ';' COND ';' POSTFIX_EXP  ')' LOOPBODY {$$=buildTree("FOR",$5,$9);} 
+      | FOR '(' ASSIGN_EXPR ';' COND ';' statement  ')' LOOPBODY {$$=buildTree("FOR",$5,$9);} 
       | ELSE LOOPBODY {$$=buildTree("ELSE",NULL,$2);}
       | IF '(' COND ')' LOOPBODY {$$=buildTree("IF",$3,$5);}
       
@@ -81,6 +81,7 @@ LOOPBODY
   	  : '{' LOOPC '}' {$$=$2;}
   	  | ';'
   	  | statement ';'
+	  | POSTFIX_EXP ';'
 	  | PRINT 
   	  ;
 
@@ -95,6 +96,7 @@ statement
       : ASSIGN_EXPR {$$ = $1;}
       | EXP {$$=$1;}
       | PRINT
+      | POSTFIX_EXP {$$ = $1;}
       ;
 
 COND
@@ -111,7 +113,8 @@ COND
 ASSIGN_EXPR
       : LIT T_eq EXP {$$=buildTree("=",$1,$3);}
       | TYPE LIT T_eq EXP {$$=buildTree("=",$2,$4);}
-      
+      | TYPE LIT {$$=buildTree("=",$2,NULL);}
+
       ;
 
 
@@ -171,7 +174,7 @@ un_boolop
 %%
 int main(int argc,char *argv[])
 {
-  yyin = fopen("input.c","r");
+  yyin = fopen("input2.c","r");
   /*
   node *root,*temp;
   root = (node*)malloc(sizeof(node));

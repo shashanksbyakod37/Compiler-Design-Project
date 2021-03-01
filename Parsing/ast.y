@@ -111,7 +111,9 @@ COND
 ASSIGN_EXPR
       : LIT T_eq EXP {$$=buildTree("=",$1,$3);}
       | TYPE LIT T_eq EXP {$$=buildTree("=",$2,$4);}
-      
+
+      | TYPE LIT {$$=buildTree("=",$2,NULL);}
+
       ;
 
 

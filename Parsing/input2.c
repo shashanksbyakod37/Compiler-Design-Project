@@ -1,7 +1,8 @@
 #include<stdio.h>
 void main()
 {
- int a = 4 - 5 * 2;
+ int a;
+	a = 5;
         int b = a * 7;
         
         while( a>b ){
@@ -17,7 +18,7 @@ void main()
 			   k = 7;
 		}
         for (int i = 0; i< 10;i++){
-		v =v+ 4 ;
+		v =v+1 ;
 		}
         
         a = 100;
