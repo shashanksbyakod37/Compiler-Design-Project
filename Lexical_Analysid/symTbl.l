@@ -12,9 +12,8 @@ alpha [A-Za-z_]
 digit [0-9]
 %option yylineno
 %%
-[/][/].* {;}
-[/]\*.* {;}
-.*\*[/]	{;}
+"/*"					{ multicomment(); }
+"//"					{ singlecomment(); }
 [ \t\n] {yylval = strdup(yytext);}
 ":" {yylval = strdup(yytext);return T_colon;}
 "?" {yylval = strdup(yytext);return T_ques;}
@@ -58,3 +57,26 @@ digit [0-9]
 .    return yytext[0];
 
 %%
+
+
+multicomment()
+{
+	char c, c1;
+	while ((c = input()) != '*' && c != 0);
+	c1=input();
+	if(c=='*' && c1=='/')
+	{
+		c=0;
+	}
+	if (c != 0)
+		putchar(c1);
+}
+singlecomment()
+{
+	char c;
+	while(c=input()!='\n');
+	if(c=='\n')
+		c=0;
+	if(c!=0)
+		putchar(c);
+}

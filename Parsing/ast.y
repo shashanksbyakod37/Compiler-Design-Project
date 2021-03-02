@@ -50,10 +50,10 @@ BODY
       ;
 
 C
-      : C statement ';' {printTree($2);printf("\n");printf("----------------------------------------------------------------\n");}
-      | C LOOPS {printTree($2);printf("\n");printf("----------------------------------------------------------------\n");}
-      | statement ';' {printTree($1);printf("\n");printf("----------------------------------------------------------------\n");}
-      | LOOPS {printTree($1);printf("\n");printf("----------------------------------------------------------------\n");}
+      : C statement ';' {printTree($2);printf("\n");printf("                                                       \n");}
+      | C LOOPS {printTree($2);printf("\n");printf("                                                                  \n");}
+      | statement ';' {printTree($1);printf("\n");printf("                                                              \n");}
+      | LOOPS {printTree($1);printf("\n");printf("                                                                    \n");}
       ;
 
 EXP
@@ -139,8 +139,13 @@ FACTOR
 
 
 PRINT
-      : PRINTF '(' STRING ')' 
+      : PRINTF T  {$$ = buildTree("PRINTF", $2,NULL);}
       ;
+
+T
+      : '(' STRING ')' ';' {$$ = buildTree("STRING",$1,$2);}
+      | '('  ')' ';' {;}
+
 LIT
       : ID {$$ = buildTree((char *)yylval,0,0);}
       | NUM {$$ = buildTree((char *)yylval,0,0);}
@@ -219,7 +224,7 @@ void printTree(node *tree)
 }
 void yyerror (char *s) {
    fprintf (stderr, "%s\n", s);
-    printf("Error  %s at line number %d \n",yytext,yylineno);
+    printf("Error   at line number %d \n",yylineno);
 
  }
 

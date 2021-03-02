@@ -16,7 +16,7 @@ void main()
         }
 		for (int j=7;j>2 ;j-- ){
 			   k = 7;
-		}
+		
         for (int i = 0; i< 10;i++){
 		v =v+1 ;
 		}
@@ -27,13 +27,17 @@ void main()
 		{
 			i = 2;
 		}
+		else {
+		z = z +1;
+		}
 	
 	int y = a+b;
-	
+		
 
 
-return;
+
 
 }
         
 
+}

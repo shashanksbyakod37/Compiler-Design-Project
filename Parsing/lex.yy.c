@@ -263,6 +263,9 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 
 #define YY_USES_REJECT
+
+#define yywrap() 1
+#define YY_SKIP_YYWRAP
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
@@ -480,7 +483,7 @@ char *yytext;
     #include<string.h>
     #include<stdio.h>
     #include "ast.tab.h"
-#line 484 "lex.yy.c"
+#line 487 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -633,7 +636,7 @@ YY_DECL
 
 #line 12 "ast.l"
 
-#line 637 "lex.yy.c"
+#line 640 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -929,7 +932,7 @@ YY_RULE_SETUP
 #line 56 "ast.l"
 ECHO;
 	YY_BREAK
-#line 933 "lex.yy.c"
+#line 936 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1816,10 +1819,6 @@ int main()
 #line 56 "ast.l"
 
 
-yywrap()
-{
-	return(1);
-}
 
 multicomment()
 {

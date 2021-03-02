@@ -50,10 +50,10 @@ BODY
       ;
 
 C
-      : C statement ';' {printTree($2);printf("\n");printf("----------------------------------------------------------------\n");}
-      | C LOOPS {printTree($2);printf("\n");printf("----------------------------------------------------------------\n");}
-      | statement ';' {printTree($1);printf("\n");printf("----------------------------------------------------------------\n");}
-      | LOOPS {printTree($1);printf("\n");printf("----------------------------------------------------------------\n");}
+      : C statement ';' {printTree($2);printf("\n");printf("                                                       \n");}
+      | C LOOPS {printTree($2);printf("\n");printf("                                                                  \n");}
+      | statement ';' {printTree($1);printf("\n");printf("                                                              \n");}
+      | LOOPS {printTree($1);printf("\n");printf("                                                                    \n");}
       ;
 
 EXP
@@ -70,7 +70,7 @@ POSTFIX_EXP
 
 LOOPS
       : WHILE '(' COND ')' LOOPBODY {$$=buildTree("WHILE",$3,$5);}
-      | FOR '(' ASSIGN_EXPR ';' COND ';' statement  ')' LOOPBODY {$$=buildTree("FOR",$5,$9);} 
+      | FOR '(' ASSIGN_EXPR ';' COND ';' POSTFIX_EXP  ')' LOOPBODY {$$=buildTree("FOR",$5,$9);} 
       | ELSE LOOPBODY {$$=buildTree("ELSE",NULL,$2);}
       | IF '(' COND ')' LOOPBODY {$$=buildTree("IF",$3,$5);}
       
@@ -81,7 +81,6 @@ LOOPBODY
   	  : '{' LOOPC '}' {$$=$2;}
   	  | ';'
   	  | statement ';'
-	  | POSTFIX_EXP ';'
 	  | PRINT 
   	  ;
 
@@ -96,7 +95,6 @@ statement
       : ASSIGN_EXPR {$$ = $1;}
       | EXP {$$=$1;}
       | PRINT
-      | POSTFIX_EXP {$$ = $1;}
       ;
 
 COND
@@ -113,6 +111,7 @@ COND
 ASSIGN_EXPR
       : LIT T_eq EXP {$$=buildTree("=",$1,$3);}
       | TYPE LIT T_eq EXP {$$=buildTree("=",$2,$4);}
+
       | TYPE LIT {$$=buildTree("=",$2,NULL);}
 
       ;
@@ -140,8 +139,13 @@ FACTOR
 
 
 PRINT
-      : PRINTF '(' STRING ')' 
+      : PRINTF T  {$$ = buildTree("PRINTF", $2,NULL);}
       ;
+
+T
+      : '(' STRING ')' ';' {$$ = buildTree("STRING",$1,$2);}
+      | '('  ')' ';' {;}
+
 LIT
       : ID {$$ = buildTree((char *)yylval,0,0);}
       | NUM {$$ = buildTree((char *)yylval,0,0);}
@@ -174,7 +178,7 @@ un_boolop
 %%
 int main(int argc,char *argv[])
 {
-  yyin = fopen("input2.c","r");
+  yyin = fopen("input.c","r");
   /*
   node *root,*temp;
   root = (node*)malloc(sizeof(node));
@@ -220,7 +224,7 @@ void printTree(node *tree)
 }
 void yyerror (char *s) {
    fprintf (stderr, "%s\n", s);
-    printf("Error  %s at line number %d \n",yytext,yylineno);
+    printf("Error   at line number %d \n",yylineno);
 
  }
 

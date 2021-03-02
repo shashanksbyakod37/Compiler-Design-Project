@@ -1,4 +1,4 @@
-
+%option noyywrap
 %{
     #include<string.h>
     #include<stdio.h>
@@ -55,10 +55,6 @@ digit [0-9]
 
 %%
 
-yywrap()
-{
-	return(1);
-}
 
 multicomment()
 {

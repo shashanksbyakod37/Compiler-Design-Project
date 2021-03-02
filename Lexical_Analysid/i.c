@@ -3,7 +3,7 @@ void main()
 {
     int a=10;
     int b;
-    for(i=0;i<10;i=i+1)
+    for(int i=0;i<10;i=i++)
     {
         while(a>b)
         {

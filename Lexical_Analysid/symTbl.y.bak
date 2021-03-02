@@ -252,7 +252,19 @@ void lookup(char *token,int line,char type,char *value,char *datatype)
     struct_index++;
   }
 }
-
+/*
+void insert(char *token,int line,char type, char* value, char *datatype)
+{
+  printf("start");
+  strcpy(st[struct_index].name,token);
+  st[struct_index].type=type;
+  strcpy(st[struct_index].value,value);
+  strcpy(st[struct_index].datatype,datatype);
+  st[struct_index].line = line;
+  struct_index++;
+  printf("end");
+}
+*/
 void search_id(char *token,int lineno)
 {
   int flag = 0;
